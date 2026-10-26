@@ -105,6 +105,7 @@ export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) 
                         <Button
                           variant="ghost"
                           size="sm"
+                          data-testid="cart-item-remove"
                           onClick={() => removeFromCart(item.id, item.selectedColor, item.selectedSize)}
                           className="text-[#393E46] hover:text-red-500 hover:bg-red-50 p-1 rounded-full"
                         >
@@ -118,15 +119,17 @@ export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) 
                           <Button
                             variant="ghost"
                             size="sm"
+                            data-testid="cart-qty-decrease"
                             onClick={() => updateQuantity(item.id, item.selectedColor, item.selectedSize, item.quantity - 1)}
                             className="text-[#393E46] hover:text-[#00ADB5] hover:bg-[#00ADB5]/10 rounded-full"
                           >
                             <Minus className="h-4 w-4" />
                           </Button>
-                          <span className="px-3 py-1 font-medium text-[#222831]">{item.quantity}</span>
+                          <span data-testid="cart-item-qty" className="px-3 py-1 font-medium text-[#222831]">{item.quantity}</span>
                           <Button
                             variant="ghost"
                             size="sm"
+                            data-testid="cart-qty-increase"
                             onClick={() => updateQuantity(item.id, item.selectedColor, item.selectedSize, item.quantity + 1)}
                             className="text-[#393E46] hover:text-[#00ADB5] hover:bg-[#00ADB5]/10 rounded-full"
                           >
@@ -160,7 +163,7 @@ export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) 
                 <div className="space-y-4">
                   <div className="flex justify-between">
                     <span className="text-[#393E46]">Subtotal</span>
-                    <span className="font-medium text-[#222831]">${subtotal.toFixed(2)}</span>
+                    <span data-testid="cart-subtotal" className="font-medium text-[#222831]">${subtotal.toFixed(2)}</span>
                   </div>
                   
                   <div className="flex justify-between">
@@ -186,14 +189,14 @@ export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) 
                   
                   <div className="flex justify-between">
                     <span className="text-[#393E46]">Tax</span>
-                    <span className="font-medium text-[#222831]">${tax.toFixed(2)}</span>
+                    <span data-testid="cart-tax" className="font-medium text-[#222831]">${tax.toFixed(2)}</span>
                   </div>
                   
                   <Separator className="border-[#393E46]/20" />
                   
                   <div className="flex justify-between">
                     <span className="font-semibold text-[#222831]">Total</span>
-                    <span className="font-bold text-xl text-[#222831]">${total.toFixed(2)}</span>
+                    <span data-testid="cart-total" className="font-bold text-xl text-[#222831]">${total.toFixed(2)}</span>
                   </div>
                 </div>
 

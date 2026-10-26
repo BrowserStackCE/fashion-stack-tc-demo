@@ -176,12 +176,13 @@ export function Header({
               <Button
                 variant="ghost"
                 size="sm"
+                data-testid="header-cart"
                 onClick={onCartClick}
                 className="text-[#222831] hover:text-[#00ADB5] hover:bg-[#00ADB5]/10 p-2 rounded-full transition-all duration-200 relative"
               >
                 <ShoppingBag className="h-5 w-5" />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#00ADB5] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                  <span data-testid="header-cart-count" className="absolute -top-1 -right-1 bg-[#00ADB5] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                     {cartItemCount}
                   </span>
                 )}

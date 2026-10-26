@@ -1,5 +1,11 @@
 // src/api/auth.ts
-import api from "./client";
+import { DEMO_OTP, delay, loadUsers, saveUser } from "./mockData";
+
+const issueToken = (userId: number) => {
+  const token = `mock-jwt-${userId}`;
+  localStorage.setItem("jwtToken", token);
+  return token;
+};
 
 // Register function
 export const register = async ({
@@ -11,17 +17,14 @@ export const register = async ({
   email: string;
   password: string;
 }) => {
-  try {
-    const response = await api.post("/auth", {
-      action: "register",
-      name,
-      email,
-      password,
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || error.message);
+  await delay();
+  const normalized = email.trim().toLowerCase();
+  if (loadUsers().some((u) => u.email === normalized)) {
+    throw new Error("An account with this email already exists");
   }
+  const user = { id: Date.now(), name, email: normalized, password };
+  saveUser(user);
+  return { id: user.id, message: "Registration successful" };
 };
 
 // Login function
@@ -32,34 +35,20 @@ export const login = async ({
   email: string;
   password: string;
 }) => {
-  try {
-    const response = await api.post("/auth", {
-      action: "login",
-      email,
-      password,
-    });
-
-    const data = response.data;
-
-    // Save token in localStorage
-    if (data.token) {
-      localStorage.setItem("jwtToken", data.token);
-    }
-
-    return data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
+  await delay();
+  const user = loadUsers().find(
+    (u) => u.email === email.trim().toLowerCase() && u.password === password
+  );
+  if (!user) throw new Error("Invalid email or password");
+  return { token: issueToken(user.id) };
 };
 
 // Get OTP function
 export const getOtp = async ({ email }: { email: string }) => {
-  try {
-    const response = await api.post("/request-otp", { email });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
+  await delay();
+  const user = loadUsers().find((u) => u.email === email.trim().toLowerCase());
+  if (!user) throw new Error("No account found for this email");
+  return { success: true, message: "OTP sent to your email" };
 };
 
 // Login via OTP function
@@ -70,22 +59,8 @@ export const loginViaOtp = async ({
   email: string;
   otp: number;
 }) => {
-  try {
-    const response = await api.post("/auth", {
-      action: "otp-login",
-      email,
-      otp,
-    });
-
-    const data = response.data;
-
-    // Save token in localStorage
-    if (data.token) {
-      localStorage.setItem("jwtToken", data.token);
-    }
-
-    return data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
+  await delay();
+  const user = loadUsers().find((u) => u.email === email.trim().toLowerCase());
+  if (!user || otp !== DEMO_OTP) throw new Error("Invalid or expired OTP");
+  return { token: issueToken(user.id) };
 };

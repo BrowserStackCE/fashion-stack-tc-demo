@@ -12,7 +12,7 @@ const products = [
     price: 189.99,
     originalPrice: 249.99,
     rating: 4.8,
-    reviews: 124,
+    reviewCount: 124,
     image:
       "https://images.unsplash.com/photo-1645654731316-a350fdcf3bae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaWxrJTIwd3JhcCUyMGRyZXNzJTIwZWxlZ2FudHxlbnwxfHx8fDE3NTU1MzE1MTd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     isOnSale: true,
@@ -28,7 +28,7 @@ const products = [
     name: "Heritage Denim Jacket",
     price: 159.99,
     rating: 4.6,
-    reviews: 89,
+    reviewCount: 89,
     image:
       "https://images.unsplash.com/photo-1724856604247-0de2c43b6491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZW5pbSUyMGphY2tldCUyMGhlcml0YWdlJTIwZmFzaGlvbnxlbnwxfHx8fDE3NTU1MzE1MTd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     isOnSale: false,
@@ -45,7 +45,7 @@ const products = [
     price: 39.99,
     originalPrice: 59.99,
     rating: 4.9,
-    reviews: 256,
+    reviewCount: 256,
     image:
       "https://images.unsplash.com/photo-1562157873-818bc0726f68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3R0b24lMjB0LXNoaXJ0JTIwZXNzZW50aWFsJTIwYmFzaWNzfGVufDF8fHx8MTc1NTUzMTUxOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     isOnSale: true,
@@ -61,7 +61,7 @@ const products = [
     name: "Leather Crossbody Bag",
     price: 149.99,
     rating: 4.7,
-    reviews: 67,
+    reviewCount: 67,
     image:
       "https://images.unsplash.com/photo-1749842622314-75a5c344ceab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWF0aGVyJTIwY3Jvc3Nib2R5JTIwYmFnJTIwYWNjZXNzb3JpZXN8ZW58MXx8fHwxNzU1NTMxNTE5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     isOnSale: false,
@@ -78,7 +78,7 @@ const products = [
     price: 129.99,
     originalPrice: 179.99,
     rating: 4.5,
-    reviews: 178,
+    reviewCount: 178,
     image:
       "https://images.unsplash.com/photo-1579041925212-0475426bea28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHJhaWdodCUyMGxlZyUyMGplYW5zJTIwZGVuaW18ZW58MXx8fHwxNzU1NTMxNTE5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     isOnSale: true,
@@ -94,7 +94,7 @@ const products = [
     name: "Linen Button Shirt",
     price: 89.99,
     rating: 4.4,
-    reviews: 92,
+    reviewCount: 92,
     image:
       "https://images.unsplash.com/photo-1744208525808-66c60e0ea68c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5lbiUyMGJ1dHRvbiUyMHNoaXJ0JTIwY2FzdWFsfGVufDF8fHx8MTc1NTUzMTUyMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     isOnSale: false,
@@ -211,7 +211,7 @@ export function ProductGrid({ onProductClick }: ProductGridProps) {
                           </span>
                         </div>
                         <span className="text-sm text-white/80">
-                          ({product.reviews} reviews)
+                          ({product.reviewCount} reviews)
                         </span>
                       </div>
 
@@ -318,7 +318,7 @@ export function ProductGrid({ onProductClick }: ProductGridProps) {
                           </span>
                         </div>
                         <span className="text-xs text-[#393E46]">
-                          ({product.reviews})
+                          ({product.reviewCount})
                         </span>
                       </div>
                     </div>

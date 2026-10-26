@@ -2,3 +2,8 @@
 node_modules/
 .env
 .DS_Store
+test-results/
+playwright-report/
+log/
+browserstack.err
+local.log

@@ -1,16 +1,11 @@
 // src/api/user.ts
-import api from "./client";
+import { delay, loadUsers } from "./mockData";
 
 // Get current user data
 export const getUser = async (token: string) => {
-  try {
-    const response = await api.get("/user", {
-      headers: {
-        Authorization: `Bearer ${token}`, // attach JWT token
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
+  await delay(100);
+  const id = Number(token.replace("mock-jwt-", ""));
+  const user = loadUsers().find((u) => u.id === id);
+  if (!user) throw new Error("Session expired, please log in again");
+  return { user: { id: user.id, name: user.name, email: user.email } };
 };

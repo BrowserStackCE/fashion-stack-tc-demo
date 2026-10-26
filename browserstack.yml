@@ -1,0 +1,33 @@
+# BrowserStack Automate config for the FashionStack demo suite.
+# Credentials come from env vars (or tc's signed-in session) — never commit keys here.
+userName: ${BROWSERSTACK_USERNAME}
+accessKey: ${BROWSERSTACK_ACCESS_KEY}
+
+framework: playwright
+projectName: FashionStack Demo
+buildName: fashionstack-e2e
+
+platforms:
+  - os: Windows
+    osVersion: 11
+    browserName: chrome
+    browserVersion: latest
+  - os: OS X
+    osVersion: Sonoma
+    browserName: playwright-webkit
+    browserVersion: latest
+
+parallelsPerPlatform: 5
+
+# Tests hit http://localhost:5000 through the Local tunnel
+browserstackLocal: true
+
+# Test Reporting & Analytics — powers RCA, failure analysis and test selection
+testObservability: true
+
+# Automated accessibility scans on every test session
+accessibility: true
+
+debug: true
+networkLogs: true
+consoleLogs: info
