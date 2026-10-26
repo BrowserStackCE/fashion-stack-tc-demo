@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import { Card, CardContent } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
-import { ChevronLeft, Plus, Minus, Trash2, ShoppingBag } from "lucide-react";
+import { ChevronLeft, Plus, Minus, Trash2, ShoppingBag, Tag } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useCart } from "./CartContext";
 
@@ -12,12 +14,28 @@ interface ShoppingCartPageProps {
 }
 
 export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) {
-  const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();
+  const {
+    cartItems,
+    updateQuantity,
+    removeFromCart,
+    promoCode,
+    applyPromoCode,
+    removePromoCode,
+    getOrderSummary,
+  } = useCart();
+  const [promoInput, setPromoInput] = useState("");
+  const [promoError, setPromoError] = useState<string | null>(null);
 
-  const subtotal = getTotalPrice();
-  const shipping = subtotal > 50 ? 0 : 9.99;
-  const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  const { subtotal, discount, shipping, tax, total } = getOrderSummary();
+
+  const handleApplyPromo = () => {
+    if (applyPromoCode(promoInput)) {
+      setPromoError(null);
+      setPromoInput("");
+    } else {
+      setPromoError("Invalid promo code");
+    }
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -165,6 +183,50 @@ export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) 
                     <span className="text-[#393E46]">Subtotal</span>
                     <span data-testid="cart-subtotal" className="font-medium text-[#222831]">${subtotal.toFixed(2)}</span>
                   </div>
+
+                  {/* Promo Code */}
+                  {promoCode ? (
+                    <div className="flex items-center justify-between bg-[#00ADB5]/10 p-3 rounded-xl">
+                      <span className="flex items-center gap-2 text-sm text-[#00ADB5] font-medium">
+                        <Tag className="h-4 w-4" />
+                        {promoCode} applied — 10% off
+                      </span>
+                      <button
+                        onClick={removePromoCode}
+                        className="text-xs text-[#393E46] underline hover:text-red-500"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex gap-2">
+                        <Input
+                          placeholder="Promo code"
+                          value={promoInput}
+                          onChange={(e) => setPromoInput(e.target.value)}
+                          className="rounded-full border-[#393E46]/20"
+                        />
+                        <Button
+                          variant="outline"
+                          onClick={handleApplyPromo}
+                          className="rounded-full border-[#00ADB5] text-[#00ADB5] hover:bg-[#00ADB5]/10"
+                        >
+                          Apply
+                        </Button>
+                      </div>
+                      {promoError && (
+                        <p className="mt-2 text-xs text-red-300">{promoError}</p>
+                      )}
+                    </div>
+                  )}
+
+                  {discount > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-[#393E46]">Discount ({promoCode})</span>
+                      <span data-testid="cart-discount" className="font-medium text-[#00ADB5]">-${discount.toFixed(2)}</span>
+                    </div>
+                  )}
                   
                   <div className="flex justify-between">
                     <span className="text-[#393E46]">Shipping</span>
@@ -204,7 +266,7 @@ export function ShoppingCartPage({ onBack, onCheckout }: ShoppingCartPageProps) 
                   onClick={onCheckout}
                   className="w-full bg-[#00ADB5] hover:bg-[#00ADB5]/90 text-white py-4 rounded-full font-medium modern-shadow-md cyan-glow transition-all duration-300"
                 >
-                  Proceed to Checkout
+                  Secure Checkout
                 </Button>
 
                 <div className="text-center">

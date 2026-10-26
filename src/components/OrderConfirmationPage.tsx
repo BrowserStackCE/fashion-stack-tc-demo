@@ -105,6 +105,9 @@ Charged: $${pricing.total.toFixed(2)}`,
       startY: summaryY + 5,
       body: [
         ["Subtotal", `$${pricing.subtotal.toFixed(2)}`],
+        ...(pricing.discount > 0
+          ? [[`Discount (${pricing.promoCode})`, `-$${pricing.discount.toFixed(2)}`]]
+          : []),
         [
           "Shipping",
           pricing.shipping === 0 ? "Free" : `$${pricing.shipping.toFixed(2)}`,
@@ -265,6 +268,17 @@ Charged: $${pricing.total.toFixed(2)}`,
                       ${pricing.subtotal.toFixed(2)}
                     </span>
                   </div>
+
+                  {pricing.discount > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-[#393E46]">
+                        Discount ({pricing.promoCode})
+                      </span>
+                      <span className="font-medium text-[#00ADB5]">
+                        -${pricing.discount.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="flex justify-between">
                     <span className="text-[#393E46]">Shipping</span>

@@ -23,7 +23,7 @@ interface CheckoutPageProps {
 }
 
 export function CheckoutPage({ onBack, onComplete }: CheckoutPageProps) {
-  const { cartItems, getTotalPrice, clearCart } = useCart();
+  const { cartItems, promoCode, getOrderSummary, clearCart } = useCart();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -44,10 +44,7 @@ export function CheckoutPage({ onBack, onComplete }: CheckoutPageProps) {
     newsletter: false,
   });
 
-  const subtotal = getTotalPrice();
-  const shipping = subtotal > 50 ? 0 : 9.99;
-  const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  const { subtotal, discount, shipping, tax, total } = getOrderSummary();
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -60,7 +57,7 @@ export function CheckoutPage({ onBack, onComplete }: CheckoutPageProps) {
       orderNumber: `FS${Date.now()}`,
       customerInfo: formData,
       items: cartItems,
-      pricing: { subtotal, shipping, tax, total },
+      pricing: { subtotal, discount, promoCode, shipping, tax, total },
       orderDate: new Date().toISOString(),
     };
     clearCart();
@@ -413,6 +410,20 @@ export function CheckoutPage({ onBack, onComplete }: CheckoutPageProps) {
                         </span>
                       </div>
 
+                      {discount > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-[#393E46]">
+                            Discount ({promoCode})
+                          </span>
+                          <span
+                            data-testid="checkout-discount"
+                            className="font-medium text-[#00ADB5]"
+                          >
+                            -${discount.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+
                       <div className="flex justify-between">
                         <span className="text-[#393E46]">Shipping</span>
                         <span
@@ -437,7 +448,10 @@ export function CheckoutPage({ onBack, onComplete }: CheckoutPageProps) {
                         <span className="font-semibold text-[#222831]">
                           Total
                         </span>
-                        <span className="font-bold text-xl text-[#222831]">
+                        <span
+                          data-testid="checkout-total"
+                          className="font-bold text-xl text-[#222831]"
+                        >
                           ${total.toFixed(2)}
                         </span>
                       </div>

@@ -18,6 +18,19 @@ export interface Product {
   colorImages?: Record<string, string>;
 }
 
+// Promo codes and the fraction of the subtotal they take off
+export const PROMO_CODES: Record<string, number> = {
+  SAVE10: 0.1,
+};
+
+export interface OrderSummary {
+  subtotal: number;
+  discount: number;
+  shipping: number;
+  tax: number;
+  total: number;
+}
+
 export interface CartItem extends Product {
   quantity: number;
   selectedColor: string;
@@ -42,12 +55,17 @@ interface CartContextType {
   clearCart: () => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  promoCode: string | null;
+  applyPromoCode: (code: string) => boolean;
+  removePromoCode: () => void;
+  getOrderSummary: () => OrderSummary;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [promoCode, setPromoCode] = useState<string | null>(null);
 
   const addToCart = (
     product: Product,
@@ -117,6 +135,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => {
     setCartItems([]);
+    setPromoCode(null);
   };
 
   const getTotalPrice = () => {
@@ -130,6 +149,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
+  const applyPromoCode = (code: string) => {
+    const normalized = code.trim().toUpperCase();
+    if (!(normalized in PROMO_CODES)) return false;
+    setPromoCode(normalized);
+    return true;
+  };
+
+  const removePromoCode = () => {
+    setPromoCode(null);
+  };
+
+  const getOrderSummary = (): OrderSummary => {
+    const subtotal = getTotalPrice();
+    const discount = promoCode ? subtotal * PROMO_CODES[promoCode] : 0;
+    const shipping = subtotal > 50 ? 0 : 9.99;
+    const tax = (subtotal - discount) * 0.08;
+    const total = subtotal - discount + shipping + tax;
+    return { subtotal, discount, shipping, tax, total };
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -140,6 +179,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCart,
         getTotalPrice,
         getTotalItems,
+        promoCode,
+        applyPromoCode,
+        removePromoCode,
+        getOrderSummary,
       }}
     >
       {children}
