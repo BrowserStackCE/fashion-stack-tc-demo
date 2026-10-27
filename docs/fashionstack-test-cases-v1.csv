@@ -1,0 +1,37 @@
+Title,Description,Folder,Preconditions,Priority,State,Type of Test Case,Automation Status,Tags,Steps,Expected Result
+"TC-01 Homepage shows navigation, promo banner and featured products","Verify the homepage renders the brand header, category navigation, promo slider and featured product grid.",FashionStack/Home,Store is running at http://localhost:5000,Critical,Active,Functional,Automated,"home,smoke,playwright,tests/home.spec.ts",Open the store homepage,'Featured Products' heading is visible
+,,,,,,,,,Check the header,'FashionStack' H1 is visible
+,,,,,,,,,Check the category navigation,"'New', 'Men', 'Women' and 'Sale' buttons are visible"
+,,,,,,,,,Check the promo banner,'Summer Collection 2024' slide is present
+,,,,,,,,,Check the featured product grid,'Silk Wrap Dress' is visible and exactly 6 'View Details' buttons are shown
+TC-02 Searching for a product shows matching results,Verify keyword search returns only matching products.,FashionStack/Search,Store is running at http://localhost:5000,High,Active,Functional,Automated,"search,playwright,tests/search.spec.ts",Open the store homepage,Homepage loads with 'Featured Products'
+,,,,,,,,,Type 'denim' in the header search box and press Enter,'Search Results' page is shown
+,,,,,,,,,Review the results,'Heritage Denim Jacket' is listed and 'Silk Wrap Dress' is not
+TC-03 Searching for an unknown term shows the empty state,Verify search shows an empty state when nothing matches.,FashionStack/Search,Store is running at http://localhost:5000,Medium,Active,Functional,Automated,"search,negative,playwright,tests/search.spec.ts",Open the store homepage,Homepage loads with 'Featured Products'
+,,,,,,,,,Type 'spaceship' in the header search box and press Enter,'Search Results' page is shown
+,,,,,,,,,Review the results,'No results found' heading is displayed
+TC-04 Men category lists only men's products,Verify the Men category page filters products to men's items only.,FashionStack/Category,Store is running at http://localhost:5000,High,Active,Functional,Automated,"category,playwright,tests/category.spec.ts",Open the store homepage,Homepage loads with 'Featured Products'
+,,,,,,,,,Click 'Men' in the category navigation,'Men's Fashion' H1 is visible
+,,,,,,,,,Review the product list,'Heritage Denim Jacket' is listed and 'Silk Wrap Dress' is not
+"TC-05 Product details page shows price, reviews and selectable sizes","Verify the PDP shows price, review count and size selection enabling Add to Cart.",FashionStack/Product Details,Store is running at http://localhost:5000,High,Active,Functional,Automated,"pdp,playwright,tests/product.spec.ts",From the homepage click 'View Details' on 'Silk Wrap Dress',Product page opens with 'Silk Wrap Dress' H1
+,,,,,,,,,Check price and reviews,Price '$189.99' and '(124 reviews)' are visible
+,,,,,,,,,Select size 'L','Size: L' is shown as the selected size
+,,,,,,,,,Check the Add to Cart button,'Add to Cart - $189.99' button is enabled
+TC-06 Adding a product updates the cart badge and cart contents,Verify adding an item updates the header badge and the cart shows the item with correct totals.,FashionStack/Cart,Cart is empty,Critical,Active,Functional,Automated,"cart,smoke,playwright,tests/cart.spec.ts",Open 'Silk Wrap Dress' product details,Product page is shown
+,,,,,,,,,Select size 'M' and click 'Add to Cart',Header cart badge shows '1'
+,,,,,,,,,Click the cart icon in the header,'Shopping Cart' page shows 'Silk Wrap Dress' with 'Size: M'
+,,,,,,,,,Review the Order Summary,Subtotal is $189.99 and Total is $205.19 (incl. 8% tax)
+TC-07 Changing quantity recalculates totals and removing empties the cart,Verify quantity changes recalculate subtotal/tax/total and removing the item empties the cart.,FashionStack/Cart,Cart is empty,High,Active,Functional,Automated,"cart,playwright,tests/cart.spec.ts",Add 'Essential Cotton Tee' size 'S' to the cart and open the cart,Cart shows the tee with quantity 1
+,,,,,,,,,Click the quantity increase (+) button,"Quantity shows 2; Subtotal $79.98, Tax $6.40, Total $86.38"
+,,,,,,,,,Click the remove (trash) button on the item,'Your cart is empty' heading is shown
+TC-08 Guest checkout places an order and shows confirmation,Verify a guest can complete checkout end-to-end and see the order confirmation.,FashionStack/Checkout,Cart is empty; user is not logged in,Critical,Active,Functional,Automated,"checkout,smoke,playwright,tests/checkout.spec.ts",Add 'Leather Crossbody Bag' size 'One Size' to the cart and open the cart,Cart shows the bag
+,,,,,,,,,Click 'Proceed to Checkout','Checkout' H1 is visible
+,,,,,,,,,"Fill contact & shipping: jane.doe@example.com, Jane Doe, 100 Market Street, San Francisco, California, 94105, 4155550100",All fields accept input
+,,,,,,,,,"Fill payment: card 4242424242424242, name Jane Doe, expiry 12/30, CVV 123",All fields accept input
+,,,,,,,,,Click 'Complete Order',"'Order Confirmed!' heading, 'Thank you for your purchase, Jane!' and an order number like #FS123456 are shown"
+TC-09 Registered user can sign in and reach My Account,Verify a registered user can log in and lands on the account page.,FashionStack/Authentication,Demo account exists: demo@fashionstack.com / Demo@123,Critical,Active,Functional,Automated,"auth,smoke,playwright,tests/auth.spec.ts",Open the homepage and click 'Login','Welcome Back' login page is shown
+,,,,,,,,,Enter email demo@fashionstack.com and password Demo@123,Fields accept input
+,,,,,,,,,Click 'Sign In','My Account' page is shown with demo@fashionstack.com displayed
+TC-10 Sign in with a wrong password shows an error,Verify login is rejected with an error for an incorrect password.,FashionStack/Authentication,Demo account exists: demo@fashionstack.com,High,Active,Functional,Automated,"auth,negative,playwright,tests/auth.spec.ts",Open the homepage and click 'Login','Welcome Back' login page is shown
+,,,,,,,,,Enter email demo@fashionstack.com and password WrongPass1!,Fields accept input
+,,,,,,,,,Click 'Sign In','Login Error' dialog shows 'Invalid email or password'
