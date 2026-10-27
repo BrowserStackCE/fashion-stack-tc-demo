@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { openHome } from "./helpers";
 
-test("TC-01 homepage shows navigation, promo banner and featured products", async ({ page }) => {
+test("TC-6435691 homepage shows navigation, promo banner and featured products", async ({ page }) => {
   await openHome(page);
 
   await expect(page.getByRole("heading", { level: 1, name: "FashionStack" })).toBeVisible();

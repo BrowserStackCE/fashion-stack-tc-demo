@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { openHome } from "./helpers";
 
-test("TC-04 Men category lists only men's products", async ({ page }) => {
+test("TC-6435694 Men category lists only men's products", async ({ page }) => {
   await openHome(page);
   await page.getByRole("button", { name: "Men", exact: true }).first().click();
 

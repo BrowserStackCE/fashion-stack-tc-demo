@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { openProduct } from "./helpers";
 
-test("TC-05 product details page shows price, reviews and selectable sizes", async ({ page }) => {
+test("TC-6435695 product details page shows price, reviews and selectable sizes", async ({ page }) => {
   await openProduct(page, "Silk Wrap Dress");
 
   await expect(page.getByText("$189.99").first()).toBeVisible();

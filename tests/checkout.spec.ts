@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { addProductToCart } from "./helpers";
 
-test("TC-08 guest checkout places an order and shows confirmation", async ({ page }) => {
+test("TC-6435698 guest checkout places an order and shows confirmation", async ({ page }) => {
   await addProductToCart(page, "Leather Crossbody Bag", "One Size");
   await page.getByTestId("header-cart").click();
   await page.getByRole("button", { name: "Proceed to Checkout" }).click();
