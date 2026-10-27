@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Welcome Back" })).toBeVisible();
 });
 
-test("TC-6435699 registered user can sign in and reach My Account", async ({ page }) => {
+test("TC-09 registered user can sign in and reach My Account", async ({ page }) => {
   await page.getByRole("textbox", { name: "Email Address" }).fill(DEMO_USER.email);
   await page.getByRole("textbox", { name: "Password" }).fill(DEMO_USER.password);
   await page.getByRole("button", { name: "Sign In", exact: true }).click();
@@ -16,7 +16,7 @@ test("TC-6435699 registered user can sign in and reach My Account", async ({ pag
   await expect(page.getByText(DEMO_USER.email).first()).toBeVisible();
 });
 
-test("TC-6435700 sign in with a wrong password shows an error", async ({ page }) => {
+test("TC-10 sign in with a wrong password shows an error", async ({ page }) => {
   await page.getByRole("textbox", { name: "Email Address" }).fill(DEMO_USER.email);
   await page.getByRole("textbox", { name: "Password" }).fill("WrongPass1!");
   await page.getByRole("button", { name: "Sign In", exact: true }).click();

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { addProductToCart } from "./helpers";
 
-test("TC-6435696 adding a product updates the cart badge and cart contents", async ({ page }) => {
+test("TC-06 adding a product updates the cart badge and cart contents", async ({ page }) => {
   await addProductToCart(page, "Silk Wrap Dress", "M");
 
   await page.getByTestId("header-cart").click();
@@ -12,7 +12,7 @@ test("TC-6435696 adding a product updates the cart badge and cart contents", asy
   await expect(page.getByTestId("cart-total")).toHaveText("$205.19");
 });
 
-test("TC-6435697 changing quantity recalculates totals and removing empties the cart", async ({ page }) => {
+test("TC-07 changing quantity recalculates totals and removing empties the cart", async ({ page }) => {
   await addProductToCart(page, "Essential Cotton Tee", "S");
   await page.getByTestId("header-cart").click();
 
