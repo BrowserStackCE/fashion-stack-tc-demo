@@ -62,6 +62,6 @@
     "build": "vite build",
     "serve": "vite build && vite preview",
     "test": "playwright test",
-    "test:bs": "browserstack-node-sdk playwright test"
+    "test:bs": "browserstack-node-sdk playwright test --config=playwright.bs.config.cts"
   }
 }

@@ -4,7 +4,7 @@ userName: ${BROWSERSTACK_USERNAME}
 accessKey: ${BROWSERSTACK_ACCESS_KEY}
 
 framework: playwright
-projectName: FashionStack Demo
+projectName: Ecommerce Stack Demo
 buildName: fashionstack-e2e
 
 # Single platform so the feature-branch run shows exactly one failed session for RCA.
