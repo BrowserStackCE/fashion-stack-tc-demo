@@ -13,6 +13,7 @@ export default defineConfig({
     baseURL,
     viewport: { width: 1440, height: 900 },
     actionTimeout: 15_000,
+    navigationTimeout: 60_000,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },

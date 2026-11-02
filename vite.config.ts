@@ -60,5 +60,13 @@ export default defineConfig({
   server: {
     port: 5000,
     open: true,
+    host: true,
+  },
+  // Production build for BrowserStack runs: one bundle instead of hundreds of
+  // dev-server modules keeps page loads fast through the Local tunnel.
+  preview: {
+    port: 5000,
+    strictPort: true,
+    host: true,
   },
 });

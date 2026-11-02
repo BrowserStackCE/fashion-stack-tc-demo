@@ -45,7 +45,7 @@ npm test                             # 10 passed locally (~10s)
    `tc test` once. Note the build number (call it `<FAILED_BUILD>`). Live RCA
    on a fresh build can take a few minutes; having one ready keeps the clock.
 3. **Percy baseline** (visual act) — see Act 5. Needs a Percy project token.
-4. Reset: `git checkout main`, start `npm run dev` (http://localhost:5000).
+4. Reset: `git checkout main`, start `npm run serve` (production build on http://localhost:5000 — the dev server times out over BrowserStack Local).
 5. Open tabs: the store, BrowserStack Automate build list, Test Reporting &
    Analytics, Percy project, the terminal sized large (font 18+).
 
@@ -56,7 +56,7 @@ npm test                             # 10 passed locally (~10s)
 ### Act 0 — Context (1:30) · `main`
 - Click through the store: home → Silk Wrap Dress → add size M → cart → checkout.
 - Show `tests/`: 10 Playwright tests. Show the green BrowserStack build
-  (Windows/Chrome + macOS/Safari, via Local tunnel).
+  (Windows/Chrome, via Local tunnel).
 
 **How the 10 cases were authored** (show the prompt; run live only if time allows):
 
