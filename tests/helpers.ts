@@ -7,7 +7,7 @@ export const DEMO_USER = {
 };
 
 export async function openHome(page: Page) {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.getByRole("heading", { name: "Featured Products" })).toBeVisible();
 }
 
